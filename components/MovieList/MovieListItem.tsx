@@ -1,0 +1,26 @@
+import React from "react";
+import { IMovieListItemComp } from "./MovieList.interface";
+import Image from "next/image";
+import Link from "next/link";
+
+const MovieListItem = ({ id, title, posterPath }: IMovieListItemComp) => {
+  return (
+    <Link
+      href={`/movie/${id}`}
+      aria-label={title}
+      className="hover:text-rose-600 hover:opacity-80"
+    >
+      <Image
+        src={`https://image.tmdb.org/t/p/original/${posterPath}`}
+        alt={`${title} poster`}
+        width={500}
+        height={300}
+      />
+      <h3 className="mt-4 text-base text-lg text-center font-bold link-cover">
+        {title}
+      </h3>
+    </Link>
+  );
+};
+
+export default MovieListItem;
