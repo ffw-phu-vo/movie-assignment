@@ -6,7 +6,7 @@ const Hero = ({ title }: IHero) => {
   return (
     <div className="hero relative">
       <Image
-        src="/hero/hero.jpeg"
+        src="/images/hero/hero.jpeg"
         alt="Hero background"
         fill
         style={{

@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import Hero from "./components/Hero/Hero";
+import MovieList from "@/components/MovieList/MovieList";
+import Hero from "@/components/Hero/Hero";
 
 export const metadata: Metadata = {
   title: "Movie Friends",
   description: "Homepage Movie Friends",
 };
 
-export default function Home() {
+const Home = async () => {
   return (
     <>
       <Hero title="Movie Friends" />
+      <MovieList title="Engaging List" query="now_playing" />
     </>
   );
-}
+};
+
+export default Home;

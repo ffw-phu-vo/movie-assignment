@@ -33,8 +33,3 @@
 }
 
 @tailwind utilities;
-
-body {
-  color: #fff;
-  background: #000;
-}

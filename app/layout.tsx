@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import classnames from "classnames";
-import Header from "./components/Header/Header";
+import Header from "../components/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,9 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={classnames("container", inter.className)}>
+      <body className={classnames("bg-black text-white", inter.className)}>
         <Header />
-        <main>{children}</main>
+        <main className="container">{children}</main>
       </body>
     </html>
   );
