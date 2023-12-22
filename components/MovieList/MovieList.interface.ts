@@ -1,4 +1,4 @@
-import { IMovieList, IMovieListItem } from "@/api/movieApi.interface";
+import { IMovieListItem } from "@/api/movieApi.interface";
 
 export interface IMovieListComp {
   title: string;

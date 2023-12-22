@@ -23,6 +23,10 @@
   h6 {
     @apply text-lg;
   }
+
+  a {
+    @apply text-rose-600 hover:opacity-80;
+  }
 }
 @tailwind components;
 

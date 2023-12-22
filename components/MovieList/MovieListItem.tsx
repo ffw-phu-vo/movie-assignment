@@ -8,7 +8,7 @@ const MovieListItem = ({ id, title, posterPath }: IMovieListItemComp) => {
     <Link
       href={`/movie/${id}`}
       aria-label={title}
-      className="hover:text-rose-600 hover:opacity-80"
+      className="text-white hover:text-rose-600"
     >
       <Image
         src={`https://image.tmdb.org/t/p/original/${posterPath}`}
