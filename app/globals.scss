@@ -34,6 +34,10 @@
   .container {
     @apply max-w-none w-auto mx-8 md:mx-16 2xl:mx-auto 2xl:max-w-8xl ;
   }
+
+  .btn {
+    @apply inline-block py-2 px-4 bg-rose-600 text-white font-semibold rounded-lg shadow-md hover:bg-rose-700;
+  }
 }
 
 @tailwind utilities;
