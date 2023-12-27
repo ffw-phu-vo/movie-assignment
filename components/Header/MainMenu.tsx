@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import Link from "next/link";
+import movieApi from "@/api/movieApi";
 
 const menus = [
   {
@@ -16,6 +17,22 @@ const menus = [
 
 const MainMenu = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [sessionId, setSessionId] = useState("");
+  const [isLogout, setIsLogout] = useState(false);
+
+  useEffect(() => {
+    const loginData = movieApi.getLoginData();
+    if (loginData) {
+      setSessionId(loginData);
+    }
+  }, []);
+
+  const handleLogout = (e: any) => {
+    e.preventDefault();
+    setIsLogout(true);
+    movieApi.logout(sessionId);
+  };
+
   return (
     <div className="main-menu grow">
       <button
@@ -27,13 +44,13 @@ const MainMenu = () => {
           className={classnames("w-8 h-8", openMenu && "hidden")}
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
           aria-hidden="true"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           ></path>
         </svg>
@@ -41,13 +58,13 @@ const MainMenu = () => {
           className={classnames("w-8 h-8", !openMenu && "hidden")}
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
           aria-hidden="true"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M6 18L18 6M6 6l12 12"
           ></path>
         </svg>
@@ -70,6 +87,16 @@ const MainMenu = () => {
             </Link>
           );
         })}
+        {sessionId !== "" && (
+          <button
+            className="block text-lg font-bold lg:inline-block text-rose-600 hover:opacity-80 lg:text-white lg:ml-4"
+            aria-label="Log out"
+            onClick={(e) => handleLogout(e)}
+            disabled={isLogout}
+          >
+            Log out
+          </button>
+        )}
       </nav>
     </div>
   );
