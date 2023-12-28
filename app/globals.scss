@@ -27,12 +27,17 @@
   a {
     @apply text-rose-600 hover:opacity-80;
   }
+
+  input[type="text"],
+  input[type="password"] {
+    @apply px-4 py-2 rounded-lg text-black;
+  }
 }
 @tailwind components;
 
 @layer components {
   .container {
-    @apply max-w-none w-auto mx-8 md:mx-16 2xl:mx-auto 2xl:max-w-8xl ;
+    @apply max-w-none w-auto mx-8 md:mx-16 2xl:mx-auto 2xl:max-w-8xl;
   }
 
   .btn {
