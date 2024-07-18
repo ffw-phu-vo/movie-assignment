@@ -1,5 +1,10 @@
 import { notFound } from "next/navigation";
-import { IMovieList, IMovieGetList, IMovieDetail } from "./movieApi.interface";
+import {
+  IMovieList,
+  IMovieGetList,
+  IMovieDetail,
+  IUserLogin,
+} from "./movieApi.interface";
 import camelcaseKeys from "camelcase-keys";
 import getCookie from "@/helpers/utils/getCookie";
 import { MovieCookieNames } from "./movieCookieNames";
@@ -40,7 +45,7 @@ const movieApi = {
     return camelcaseKeys(await res.json(), { deep: true });
   },
 
-  login: async (username: string, password: string): Promise<any> => {
+  login: async ({ username, password }: IUserLogin): Promise<any> => {
     const res = await fetch(`${MOVIE_ENDPOINT}/authentication/token/new`, {
       method: "GET",
       headers: authOptions,
