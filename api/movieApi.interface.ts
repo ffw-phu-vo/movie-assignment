@@ -6,9 +6,10 @@ export interface IMovieGetList {
 
 // Contents
 export interface IMovieListItem {
-  id: number;
+  id?: number | string;
   title: string;
   posterPath: string;
+  type?: "movie" | "user-submitted";
 }
 
 export interface IMovieList {
@@ -33,4 +34,8 @@ export interface IMovieDetail {
 export interface IUserLogin {
   username: string;
   password: string;
+}
+
+export interface IUserSubmitted extends IMovieDetail {
+  id: string;
 }
