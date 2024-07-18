@@ -1,9 +1,11 @@
 "use client";
 import movieApi from "@/api/movieApi";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { InputController } from "../Forms/InputController";
+import { IUserLogin } from "@/api/movieApi.interface";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -13,19 +15,16 @@ const loginSchema = Yup.object().shape({
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
   // username: phu.vo
-  const [username, setUsername] = useState("");
   // password: abc123ok.
-  const [password, setPassword] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
   const formOptions = { resolver: yupResolver(loginSchema) };
-  const { register, handleSubmit, formState } = useForm(formOptions);
-  const { errors } = formState;
+  const methods = useForm(formOptions);
 
-  const handleLogin = async () => {
+  const handleLogin = async (data: IUserLogin) => {
     setLoading(true);
     try {
-      const login = await movieApi.login(username, password);
+      const login = await movieApi.login(data);
       if (!login?.success) {
         setStatusMessage(login.statusMessage);
       }
@@ -38,43 +37,30 @@ const Login = () => {
 
   return (
     <div className="login container mx-auto py-10 min-h-4/6-screen flex flex-col justify-center">
-      <form onSubmit={handleSubmit(handleLogin)} id="login-form">
-        <h1 className="mb-5">Login</h1>
+      <FormProvider {...methods}>
         {statusMessage && (
           <div className="italic text-red-400">{statusMessage}</div>
         )}
-        <div className="my-10 relative">
-          <input
-            {...register("username")}
-            type="text"
-            value={username}
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          {errors.username && (
-            <div className="absolute left-0 italic text-red-400 text-sm mt-1">
-              {errors.username?.message}
-            </div>
-          )}
-        </div>
-        <div className="my-10 relative">
-          <input
-            {...register("password")}
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors.password && (
-            <div className="absolute left-0 italic text-red-400 text-sm mt-1">
-              {errors.password?.message}
-            </div>
-          )}
-        </div>
-        <button className="btn" disabled={isLoading} aria-label="Login">
+        <InputController
+          name="username"
+          label="Username"
+          placeholder="Username"
+        />
+        <InputController
+          name="password"
+          label="Password"
+          placeholder="Password"
+          type="password"
+        />
+        <button
+          className="btn"
+          disabled={isLoading}
+          aria-label="Login"
+          onClick={methods.handleSubmit(handleLogin)}
+        >
           {isLoading ? "LOADING..." : "LOG IN"}
         </button>
-      </form>
+      </FormProvider>
     </div>
   );
 };

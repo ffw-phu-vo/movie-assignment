@@ -29,3 +29,8 @@ export interface IMovieDetail {
   popularity?: string;
   imdbId?: string;
 }
+
+export interface IUserLogin {
+  username: string;
+  password: string;
+}
