@@ -3,19 +3,21 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // EX: Store to localStorage https://github.com/devmuhib/React-food-delivery-app/blob/main/src/store/shopping-cart/cartSlice.js#L25C14-L25C19
 
-const items =
-  localStorage.getItem("userSubmitted") !== null
-    ? JSON.parse(localStorage.getItem("userSubmitted"))
-    : [];
+const getLocalStorageItems = () => {
+  const userSubmittedJson = localStorage.getItem("userSubmitted");
+  return userSubmittedJson !== null ? JSON.parse(userSubmittedJson) : [];
+};
+
+const setLocalStorageItems = (items: any) => {
+  localStorage.setItem("userSubmitted", JSON.stringify(items));
+};
 
 export interface UserSubmittedState {
-  totalUserSubmitteds: number;
   UserSubmitteds: IUserSubmitted[];
 }
 
 const initialState: UserSubmittedState = {
-  totalUserSubmitteds: items.length,
-  UserSubmitteds: items,
+  UserSubmitteds: getLocalStorageItems(),
 };
 
 export const userSubmittedSlice = createSlice({
@@ -23,13 +25,12 @@ export const userSubmittedSlice = createSlice({
   initialState,
   reducers: {
     addUserSubmitted: (state, action: PayloadAction<IUserSubmitted>) => {
-      state.UserSubmitteds.push(action.payload);
-      state.totalUserSubmitteds += 1;
-
-      localStorage.setItem(
-        "userSubmitted",
-        JSON.stringify(state.UserSubmitteds)
-      );
+      // state.UserSubmitteds.push(action.payload);
+      // state.totalUserSubmitteds += 1;
+      const items = getLocalStorageItems();
+      items.push(action.payload);
+      state.UserSubmitteds = items;
+      setLocalStorageItems(items);
     },
   },
 });
