@@ -4,7 +4,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // EX: Store to localStorage https://github.com/devmuhib/React-food-delivery-app/blob/main/src/store/shopping-cart/cartSlice.js#L25C14-L25C19
 
 const getLocalStorageItems = () => {
-  const userSubmittedJson = localStorage.getItem("userSubmitted");
+  const userSubmittedJson =
+    typeof window !== "undefined"
+      ? localStorage.getItem("userSubmitted")
+      : null;
   return userSubmittedJson !== null ? JSON.parse(userSubmittedJson) : [];
 };
 
