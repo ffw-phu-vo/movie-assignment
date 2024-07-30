@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InputController } from "../Forms/InputController";
 import { useDispatch } from "react-redux";
 import { addUserSubmitted } from "@/store/reducers/userSubmittedSlice";
+import { userSubmittedApi } from "@/api/userSubmittedApi";
 
 const UserSubmittedAddSchema = Yup.object().shape({
   originalTitle: Yup.string().required("Original Title is required"),
@@ -29,32 +30,27 @@ export const UserSubmittedAdd = () => {
 
   const formOptions = { resolver: yupResolver(UserSubmittedAddSchema) };
   const methods = useForm(formOptions);
-
   const dispatch = useDispatch();
 
   const handleSubmit = async (data: any) => {
     setLoading(true);
     try {
-      // const login = await movieApi.login(data);
-      // if (!login?.success) {
-      //   setStatusMessage(login.statusMessage);
-      // }
-      let r = (Math.random() + 1).toString(36).substring(7);
-      dispatch(
-        addUserSubmitted({
-          ...data,
-          posterPath: "mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg",
-          id: r,
-        })
-      );
-      console.log("reset");
-      methods.reset({
-        originalTitle: "",
-        overview: "",
-        releaseDate: "",
-        popularity: "",
-        imdbId: "",
+      const id = (Math.random() + 1).toString(36).substring(7);
+      const newUserSubmitted = await userSubmittedApi.createUserSubmitted({
+        ...data,
+        posterPath: "mBaXZ95R2OxueZhvQbcEWy2DqyO.jpg",
+        id,
       });
+      if (newUserSubmitted) {
+        dispatch(addUserSubmitted(newUserSubmitted));
+        methods.reset({
+          originalTitle: "",
+          overview: "",
+          releaseDate: "",
+          popularity: "",
+          imdbId: "",
+        });
+      }
     } catch (error) {
       console.log("Add User Submit => ", error);
     } finally {

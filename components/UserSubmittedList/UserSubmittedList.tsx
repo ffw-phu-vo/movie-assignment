@@ -1,23 +1,19 @@
 "use client";
-// import useInView from "@/hooks/useInView";
-import React from "react";
+import React, { useEffect } from "react";
 import MovieListItem from "../MovieList/MovieListItem";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import { IMovieListItem } from "@/api/movieApi.interface";
+import { fetchInitialState } from "@/store/reducers/userSubmittedSlice";
 
 export const UserSubmittedList = () => {
-  // const container = useRef<HTMLDivElement | null>(null);
-  // const { isInView } = useInView(container);
-  // const [currentPage, setCurrentPage] = useState(0);
-  // const [resultData, setResultData] = useState<IMovieList>({
-  //   results: [],
-  //   totalResults: 0,
-  //   totalPages: 0,
-  // });
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchInitialState());
+  }, []);
 
   const userSubmitted = useSelector((state: RootState) => state.userSubmitted);
-
+  console.log("userSubmitted", userSubmitted.UserSubmitteds);
   return (
     <div className="user-submitted-list py-12 lg:py-16">
       <h2 className="mb-10">{"User Submitted List"}</h2>
@@ -36,14 +32,6 @@ export const UserSubmittedList = () => {
             />
           );
         })}
-
-        {/* {resultData.totalPages !== currentPage && (
-          <div ref={container} className="h-20">
-            <div className="absolute left-0 right-0 h-20 flex content-center justify-center text-xl font-bold">
-              {"Loading..."}
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   );

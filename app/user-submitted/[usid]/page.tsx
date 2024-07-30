@@ -1,24 +1,29 @@
-"use client";
-
+import { userSubmittedApi } from "@/api/userSubmittedApi";
 import MovieDetail from "@/components/MovieDetail/MovieDetail";
-import { RootState } from "@/store/store";
 import { notFound } from "next/navigation";
-import { useSelector } from "react-redux";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { usid: string };
+}) {
+  const { usid } = params;
+  const detail = await userSubmittedApi.getUserSubmittedById(usid);
+  if (!detail) {
+    return notFound();
+  }
+  return {
+    title: detail.originalTitle,
+    description: detail.overview,
+  };
+}
 
 export default async function Page({ params }: { params: { usid: string } }) {
   const { usid } = params;
-
-  const userSubmitted = useSelector((state: RootState) => state.userSubmitted);
-
-  const detail: any = userSubmitted.UserSubmitteds.find(
-    (item: any) => item.id === usid
-  );
-
-  if (detail === null) {
+  const detail = await userSubmittedApi.getUserSubmittedById(usid);
+  if (!detail) {
     return notFound();
   }
 
   return <MovieDetail {...detail} />;
-
-  return <div>this is detail</div>;
 }

@@ -35,7 +35,3 @@ export interface IUserLogin {
   username: string;
   password: string;
 }
-
-export interface IUserSubmitted extends IMovieDetail {
-  id: string;
-}

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "This is User submitted",
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
       <Hero title={"User Submitted List"} />
