@@ -1,6 +1,9 @@
 import { userSubmittedApi } from "@/api/userSubmittedApi";
+import DynamicBlock from "@/components/DynamicBlock/DynamicBlock";
 import MovieDetail from "@/components/MovieDetail/MovieDetail";
 import { notFound } from "next/navigation";
+
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -21,9 +24,23 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { usid: string } }) {
   const { usid } = params;
   const detail = await userSubmittedApi.getUserSubmittedById(usid);
+  // console.log("detail", detail.components);
+
+  // let blocks: any = [];
+  // if (detail) {
+  //   blocks = getBlocks(detail?.components);
+  // }
+  // console.log("components", detail.components[0].content);
+
   if (!detail) {
     return notFound();
   }
-
-  return <MovieDetail {...detail} />;
+  return (
+    <>
+      <MovieDetail {...detail} />
+      <div className="components">
+        <DynamicBlock components={detail.components} />
+      </div>
+    </>
+  );
 }
