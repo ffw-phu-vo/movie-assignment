@@ -13,10 +13,6 @@ const menus = [
     name: "Upcoming",
     route: "/upcoming",
   },
-  {
-    name: "User Submitted",
-    route: "/user-submitted",
-  },
 ];
 
 const MainMenu = () => {
