@@ -17,6 +17,7 @@ const MovieListLoadMore = ({ page, query }: IMovieListLoadMoreComp) => {
   });
 
   useEffect(() => {
+    let ignore = false;
     if (isInView) {
       const nextPage = currentPage + 1;
       movieApi
@@ -25,13 +26,19 @@ const MovieListLoadMore = ({ page, query }: IMovieListLoadMoreComp) => {
           page: nextPage,
         })
         .then(async (dataPayload) => {
-          setCurrentPage(nextPage);
-          setResultData((prevData) => ({
-            ...dataPayload,
-            results: [...prevData.results, ...dataPayload?.results],
-          }));
+          if (!ignore) {
+            setCurrentPage(nextPage);
+            setResultData((prevData) => ({
+              ...dataPayload,
+              results: [...prevData.results, ...dataPayload?.results],
+            }));
+          }
         });
     }
+
+    return () => {
+      ignore = true;
+    };
   }, [isInView]);
 
   return (

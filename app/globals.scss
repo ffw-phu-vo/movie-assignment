@@ -28,9 +28,13 @@
     @apply text-rose-600 hover:opacity-80;
   }
 
+  textarea,
+  input[type="url"],
+  input[type="number"],
+  input[type="date"],
   input[type="text"],
   input[type="password"] {
-    @apply px-4 py-2 rounded-lg text-black;
+    @apply px-4 py-2 rounded-lg text-black w-full;
   }
 }
 @tailwind components;

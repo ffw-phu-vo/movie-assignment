@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { InputControllerProps } from "./InputController.interface";
-import { NumberController } from "./NumberController";
+import { NumberFormatValues, NumericFormat } from "react-number-format";
 
 export const InputController = (props: InputControllerProps) => {
   const { control } = useFormContext();
@@ -17,18 +17,40 @@ export const InputController = (props: InputControllerProps) => {
       <Controller
         name={props.name}
         control={control}
+        defaultValue=""
         render={({ field, fieldState }) => (
           <>
-            {props.type === "number" ? (
-              <NumberController field={field} props={props} />
-            ) : (
+            {props.type === "number" && (
+              <NumericFormat
+                onValueChange={(values: NumberFormatValues) =>
+                  field.onChange(values.floatValue)
+                }
+                value={field.value}
+                placeholder={props.placeholder}
+                id={props.id}
+                thousandSeparator={true}
+                decimalScale={3}
+                fixedDecimalScale={true}
+                allowNegative={false}
+              />
+            )}
+            {props.type === "textarea" && (
+              <textarea
+                rows={4}
+                cols={50}
+                onChange={field.onChange}
+                value={field.value}
+                placeholder={props.placeholder}
+                id={props.id}
+              />
+            )}
+            {props.type !== "textarea" && props.type !== "number" && (
               <input
                 onChange={field.onChange}
-                defaultValue={field.value}
+                value={field.value}
                 type={props.type ?? "text"}
                 placeholder={props.placeholder}
                 id={props.id}
-                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
             )}
             {fieldState?.error?.type && (

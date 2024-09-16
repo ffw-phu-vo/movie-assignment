@@ -3,10 +3,15 @@ import { IMovieListItemComp } from "./MovieList.interface";
 import Image from "next/image";
 import Link from "next/link";
 
-const MovieListItem = ({ id, title, posterPath }: IMovieListItemComp) => {
+const MovieListItem = ({
+  id,
+  title,
+  posterPath,
+  type = "movie",
+}: IMovieListItemComp) => {
   return (
     <Link
-      href={`/movie/${id}`}
+      href={`/${type}/${id}`}
       aria-label={title}
       className="text-white hover:text-rose-600"
     >

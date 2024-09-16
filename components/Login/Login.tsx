@@ -38,28 +38,25 @@ const Login = () => {
   return (
     <div className="login container mx-auto py-10 min-h-4/6-screen flex flex-col justify-center">
       <FormProvider {...methods}>
-        {statusMessage && (
-          <div className="italic text-red-400">{statusMessage}</div>
-        )}
-        <InputController
-          name="username"
-          label="Username"
-          placeholder="Username"
-        />
-        <InputController
-          name="password"
-          label="Password"
-          placeholder="Password"
-          type="password"
-        />
-        <button
-          className="btn"
-          disabled={isLoading}
-          aria-label="Login"
-          onClick={methods.handleSubmit(handleLogin)}
-        >
-          {isLoading ? "LOADING..." : "LOG IN"}
-        </button>
+        <form onSubmit={methods.handleSubmit(handleLogin)}>
+          {statusMessage && (
+            <div className="italic text-red-400">{statusMessage}</div>
+          )}
+          <InputController
+            name="username"
+            label="Username"
+            placeholder="Username"
+          />
+          <InputController
+            name="password"
+            label="Password"
+            placeholder="Password"
+            type="password"
+          />
+          <button className="btn" disabled={isLoading} aria-label="Login">
+            {isLoading ? "LOADING..." : "LOG IN"}
+          </button>
+        </form>
       </FormProvider>
     </div>
   );
