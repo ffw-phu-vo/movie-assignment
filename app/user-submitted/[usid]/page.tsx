@@ -21,6 +21,7 @@ export async function generateMetadata({
   };
 }
 
+// EX: /user-submitted/j4lbti
 export default async function Page({ params }: { params: { usid: string } }) {
   const { usid } = params;
   const detail = await userSubmittedApi.getUserSubmittedById(usid);
