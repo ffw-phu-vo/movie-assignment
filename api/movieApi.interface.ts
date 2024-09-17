@@ -6,6 +6,7 @@ export interface IMovieGetList {
 
 // Contents
 export interface IMovieListItem {
+  originalTitle?: string;
   id?: number | string;
   title: string;
   posterPath: string;

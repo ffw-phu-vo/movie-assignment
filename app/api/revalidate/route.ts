@@ -1,4 +1,4 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 
 /**
@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
 
   if (path) {
     revalidatePath(path);
+    revalidateTag("user-submitted-list");
     return Response.json({ revalidated: true, now: Date.now() });
   }
 

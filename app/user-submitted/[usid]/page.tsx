@@ -3,7 +3,7 @@ import DynamicBlock from "@/components/DynamicBlock/DynamicBlock";
 import MovieDetail from "@/components/MovieDetail/MovieDetail";
 import { notFound } from "next/navigation";
 
-export const revalidate = 60;
+export const revalidate = false;
 
 export async function generateMetadata({
   params,
